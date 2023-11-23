@@ -1,0 +1,32 @@
+services:
+  mysql:
+    container_name: mysql_ksero_1
+    image: 'mysql'
+    environment:
+      - 'MYSQL_DATABASE=ksero_db'
+      - 'MYSQL_PASSWORD=1234'
+      - 'MYSQL_ROOT_PASSWORD=1234'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+  products-microservice:
+    container_name: products_microservice_1
+    image: products-ms-image
+    environment:
+      - 'MY_HOST_SPRING=jdbc:mysql://mysql:3306/ksero_db?useSSL=true&createDatabaseIfNotExist=true'
+    ports:
+      - "8200:8200"
+    expose:
+      - '8200'
+    restart: on-failure
+  wholesaler-microservice:
+    container_name: wholesaler_microservice_1
+    image: wholesalers-ms-image
+    environment:
+      - 'MY_HOST_SPRING=jdbc:mysql://mysql:3306/ksero_db?useSSL=true&createDatabaseIfNotExist=true'
+    ports:
+      - "8101:8101"
+    expose:
+      - '8101'
+    restart: on-failure
