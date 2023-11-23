@@ -20,7 +20,7 @@ services:
     expose:
       - '8200'
     restart: on-failure
-  wholesaler-microservice:
+  wholesalers-microservice:
     container_name: wholesaler_microservice_1
     image: wholesalers-ms-image
     environment:
@@ -29,4 +29,24 @@ services:
       - "8101:8101"
     expose:
       - '8101'
+    restart: on-failure
+  retailers-microservice:
+    container_name: retailers_microservice_1
+    image: retailers-ms-image
+    environment:
+      - 'MY_HOST_SPRING=jdbc:mysql://mysql:3306/ksero_db?useSSL=true&createDatabaseIfNotExist=true'
+    ports:
+      - "8102:8102"
+    expose:
+      - '8102'
+    restart: on-failure
+  wholesaler-orders-microservice:
+    container_name: wholesaler_orders_microservice_1
+    image: wholesaler-orders-ms-image
+    environment:
+      - 'MY_HOST_SPRING=jdbc:mysql://mysql:3306/ksero_db?useSSL=true&createDatabaseIfNotExist=true'
+    ports:
+      - "8090:8090"
+    expose:
+      - '8090'
     restart: on-failure
